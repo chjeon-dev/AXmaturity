@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기업 AX 성숙도 매트릭스</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-color: #ffffff;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 14px;
+            color: #555;
+            margin: 0;
+        }
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        .matrix {
+            display: grid;
+            grid-template-columns: 80px repeat(7, 1fr);
+            gap: 6px;
+            max-width: 1400px;
+        }
+        .row-label {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .row-label span {
+            font-size: 12px;
+            font-weight: normal;
+            color: #666;
+            margin-top: 2px;
+        }
+        .cell {
+            padding: 20px 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            word-break: keep-all;
+        }
+        .cell:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .col-label-empty {
+            /* 빈 공간 */
+        }
+        .col-label {
+            text-align: center;
+            padding-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .col-label span {
+            display: block;
+            font-size: 12px;
+            font-weight: normal;
+            color: #555;
+            margin-top: 4px;
+        }
+        .legend-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .legend-boxes {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin: 10px 0;
+        }
+        .legend-box {
+            width: 14px;
+            height: 24px;
+        }
+        #detail-view {
+            margin: 40px auto;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #0F4C3A;
+            min-height: 24px;
+        }
+
+        /* Color Palette */
+        .c1 { background-color: #E6F7F1; color: #333; }
+        .c2 { background-color: #98E2C6; color: #333; }
+        .c3 { background-color: #53C39D; color: #fff; }
+        .c4 { background-color: #249C75; color: #fff; }
+        .c5 { background-color: #126D50; color: #fff; }
+        .c6 { background-color: #0E4B39; color: #fff; }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>기업 AX 성숙도 매트릭스</h1>
+        <p>셀을 클릭하면 하단에 상세 내용이 표시됩니다</p>
+    </div>
+
+    <div class="main-container">
+        <div class="matrix">
+            <div class="row-label">Scale<span>확산</span></div>
+            <div class="cell c2" onclick="showDetail(this)">전사 예측 체계 표준화</div>
+            <div class="cell c4" onclick="showDetail(this)">전사 ML 파이프라인 확산</div>
+            <div class="cell c3" onclick="showDetail(this)">전사 AI 활용 표준 정착</div>
+            <div class="cell c6" onclick="showDetail(this)">전사 지식 검색 플랫폼</div>
+            <div class="cell c6" onclick="showDetail(this)">전사 맞춤 모델 확산</div>
+            <div class="cell c6" onclick="showDetail(this)">전사 업무 자동화 확산</div>
+            <div class="cell c6" onclick="showDetail(this)">전사 에이전트 확산</div>
+
+            <div class="row-label">Production<span>운영</span></div>
+            <div class="cell c1" onclick="showDetail(this)">예측 시스템 자동화</div>
+            <div class="cell c4" onclick="showDetail(this)">모델 서빙 자동화</div>
+            <div class="cell c3" onclick="showDetail(this)">시스템 내 AI 기능 내장</div>
+            <div class="cell c4" onclick="showDetail(this)">검색 시스템 상시 운영</div>
+            <div class="cell c5" onclick="showDetail(this)">모델 자동 재학습 체계</div>
+            <div class="cell c4" onclick="showDetail(this)">자동화 프로세스 상시 운영</div>
+            <div class="cell c6" onclick="showDetail(this)">에이전트 상시 운영</div>
+
+            <div class="row-label">Pilot<span>적용</span></div>
+            <div class="cell c2" onclick="showDetail(this)">부서별 분석 결과 의사결정 반영</div>
+            <div class="cell c4" onclick="showDetail(this)">특정 팀 모델 실무 적용</div>
+            <div class="cell c3" onclick="showDetail(this)">팀 단위 AI 활용 업무 전환</div>
+            <div class="cell c4" onclick="showDetail(this)">팀 내 검색 시스템 실무 운영</div>
+            <div class="cell c6" onclick="showDetail(this)">커스텀 모델 실무 투입</div>
+            <div class="cell c4" onclick="showDetail(this)">팀 업무 자동화 실운영</div>
+            <div class="cell c6" onclick="showDetail(this)">특정 업무 에이전트 실운영</div>
+
+            <div class="row-label">PoC<span>검증</span></div>
+            <div class="cell c1" onclick="showDetail(this)">내부 분석 파이프라인 구축</div>
+            <div class="cell c4" onclick="showDetail(this)">자사 데이터로 모델 프로토타입</div>
+            <div class="cell c2" onclick="showDetail(this)">AI 활용 업무 프로세스 표준화</div>
+            <div class="cell c4" onclick="showDetail(this)">사내 데이터 연동 검색 프로토타입</div>
+            <div class="cell c4" onclick="showDetail(this)">도메인 데이터로 모델 학습</div>
+            <div class="cell c3" onclick="showDetail(this)">업무 프로세스 자동화 파이프라인</div>
+            <div class="cell c4" onclick="showDetail(this)">특정 태스크 에이전트 파이프라인</div>
+
+            <div class="row-label">Training<span>탐색</span></div>
+            <div class="cell c1" onclick="showDetail(this)">엑셀·R로 직접 분석</div>
+            <div class="cell c2" onclick="showDetail(this)">Off-the-shelf 모델 활용</div>
+            <div class="cell c1" onclick="showDetail(this)">개인 AI 도구 활용</div>
+            <div class="cell c2" onclick="showDetail(this)">RAG 내장 서비스 체험</div>
+            <div class="cell c3" onclick="showDetail(this)">AutoTrain·노트북으로 모델 커스텀 체험</div>
+            <div class="cell c2" onclick="showDetail(this)">기존 업무 AI 자동화 체험</div>
+            <div class="cell c3" onclick="showDetail(this)">에이전트 도구 체험</div>
+
+            <div class="col-label-empty"></div>
+            <div class="col-label">통계모델<span>ARIMA, SARIMA, 회귀분석</span></div>
+            <div class="col-label">ML/DL<span>XGBoost, CNN, LSTM</span></div>
+            <div class="col-label">AI Assistant<span>ChatGPT, Gemini, Copilot</span></div>
+            <div class="col-label">RAG<span>NotebookLM, Pinecone</span></div>
+            <div class="col-label">Fine-tuning<span>QLoRA, DoRA, Unsloth</span></div>
+            <div class="col-label">AI Workflow<span>n8n, Make, LangGraph</span></div>
+            <div class="col-label">AI Agent<span>Claude Code, OpenClaw</span></div>
+        </div>
+
+        <div class="legend-container">
+            <div>자체 가능</div>
+            <div class="legend-boxes">
+                <div class="legend-box c1"></div>
+                <div class="legend-box c2"></div>
+                <div class="legend-box c3"></div>
+                <div class="legend-box c4"></div>
+                <div class="legend-box c5"></div>
+                <div class="legend-box c6"></div>
+            </div>
+            <div>구축 대행</div>
+        </div>
+    </div>
+
+    <div id="detail-view">매트릭스의 셀을 클릭해보세요.</div>
+
+    <script>
+        function showDetail(element) {
+            const detailView = document.getElementById('detail-view');
+            detailView.innerText = "선택한 항목: " + element.innerText;
+        }
+    </script>
+</body>
+</html>
